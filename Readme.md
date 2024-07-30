@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Саша Кандауров](https://up.htmlacademy.ru/javascript-individual/2/user/2446367).
-* Наставник: `Олег Глущенко`.
+* Наставник: [Олег Глущенко](https://up.htmlacademy.ru/javascript-individual/2/user/305355)..
 
 ---
 

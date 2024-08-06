@@ -77,7 +77,10 @@ function createCommentMessage () {
   let message = getRandomArrayElement(MESSAGE);
 
   if (counter > 1) {
-    message += (` ${getRandomArrayElement(MESSAGE)}`);
+    const temp = getRandomArrayElement(MESSAGE);
+    if (message !== temp) {
+      message += ` ${temp}`;
+    }
   }
 
   return message;
@@ -117,6 +120,5 @@ function createPhotoDescription () {
 }
 
 // создание массива из 25 сгенерированных объектов
+// eslint-disable-next-line no-unused-vars
 const descrArray = Array.from({length: 25}, createPhotoDescription);
-
-descrArray();

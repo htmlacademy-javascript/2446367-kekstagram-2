@@ -46,3 +46,29 @@ getNumberOfString('агент 007');
 getNumberOfString('а я томат');
 getNumberOfString(2025);
 getNumberOfString(-13.6);
+
+// Функция, которая принимает время начала и конца рабочего дня,
+// а также время старта и продолжительность встречи в минутах
+
+function convertTimeToMinutes (time) {
+  const [hour, minute] = time.split(':');
+
+  const normalizeHour = Number(hour);
+  const normalizeMinute = Number(minute);
+
+  return normalizeHour * 60 + normalizeMinute;
+}
+
+function isMeetingValid (dayStart, dayEnd, meetingStart, meetingDuration) {
+  const start = convertTimeToMinutes(dayStart);
+  const end = convertTimeToMinutes(dayEnd);
+  const meeting = convertTimeToMinutes(meetingStart);
+
+  return start <= meeting && (meeting + meetingDuration) <= end;
+}
+
+isMeetingValid('08:00', '17:30', '14:00', 90); // true
+isMeetingValid('8:0', '10:0', '8:0', 120); // true
+isMeetingValid('08:00', '14:30', '14:00', 90); // false
+isMeetingValid('14:00', '17:30', '08:0', 90); // false
+isMeetingValid('8:00', '17:30', '08:00', 900); // false

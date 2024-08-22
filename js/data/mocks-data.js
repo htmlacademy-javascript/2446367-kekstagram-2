@@ -1,5 +1,5 @@
-import { getRandomInteger, getRandomUniqueInteger, getRandomArrayElement } from './util.js';
-import { createUserComments } from './comment/comment-data.js';
+import { getRandomInteger, getRandomUniqueInteger, getRandomArrayElement } from '../utils.js';
+import { createUserComments } from './comments-data.js';
 
 const DESCRIPTION = [
   'Сегодняшний закат..<3',
@@ -18,17 +18,17 @@ const generateDescriptionId = getRandomUniqueInteger(1, 25);
 const generatePhotoId = getRandomUniqueInteger(1, 25);
 
 // создание объекта описания фото
-function createPhotoDescription () {
-  return {
-    id: generateDescriptionId(),
-    url: `photos/${ generatePhotoId() }.jpg`,
-    description: getRandomArrayElement(DESCRIPTION),
-    likes: getRandomInteger(15, 200),
-    comments: createUserComments(),
-  };
-}
+const createPhotoDescription = () => ({
+  id: generateDescriptionId(),
+  url: `photos/${ generatePhotoId() }.jpg`,
+  description: getRandomArrayElement(DESCRIPTION),
+  likes: getRandomInteger(15, 200),
+  comments: createUserComments(),
+});
 
-// создание массива из 25 сгенерированных объектов
+// функция создание массива из 25 сгенерированных объектов
 const createDescrArray = () => Array.from({length: 25}, createPhotoDescription);
 
-export { createDescrArray };
+const mockupPictures = createDescrArray();
+
+export { mockupPictures };

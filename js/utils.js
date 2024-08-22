@@ -1,14 +1,14 @@
 // получение случайного числа из диапазона
-function getRandomInteger (min, max) {
+const getRandomInteger = (min, max) => {
   const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
   const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
   const result = Math.random() * (upper - lower + 1) + lower;
 
   return Math.floor(result);
-}
+};
 
 // получение случайного уникального числа из диапазона
-function getRandomUniqueInteger (min, max) {
+const getRandomUniqueInteger = (min, max) => {
   const previousValues = [];
 
   return function () {
@@ -22,11 +22,12 @@ function getRandomUniqueInteger (min, max) {
     previousValues.push(currentValue);
     return currentValue;
   };
-}
+};
 
 // получение случайного элемента массива
-function getRandomArrayElement (elements) {
-  return elements[getRandomInteger(0, elements.length - 1)];
-}
+const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
-export { getRandomInteger, getRandomUniqueInteger, getRandomArrayElement};
+// проверка нажатой клавиши
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+export { getRandomInteger, getRandomUniqueInteger, getRandomArrayElement, isEscapeKey};

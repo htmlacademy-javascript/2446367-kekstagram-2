@@ -1,4 +1,20 @@
-import { getRandomInteger, getRandomArrayElement } from '../util.js';
+import { getRandomInteger, getRandomUniqueInteger, getRandomArrayElement } from '../utils.js';
+
+const NAME = [
+  'Саша',
+  'Сергей',
+  'Марина',
+  'Вячеслав Владимирович',
+  'Ярик',
+  'Степа',
+  'Наталья',
+  'Ирина Александровна',
+  'Василий',
+  'Юля',
+  'Маша',
+  'Настя',
+  'Никита',
+];
 
 const MESSAGE = [
   'Всё отлично!',
@@ -10,7 +26,7 @@ const MESSAGE = [
 ];
 
 // генерация текста комментария
-function createCommentMessage() {
+const createCommentMessage = () => {
   const counter = getRandomInteger(1, 2);
   let message = getRandomArrayElement(MESSAGE);
 
@@ -22,6 +38,31 @@ function createCommentMessage() {
   }
 
   return message;
+};
+
+// получение случайных элементов ID
+const generateUserId = getRandomUniqueInteger(1, 999);
+
+// создание объекта комментария пользователя
+function createUserComments() {
+  const count = getRandomInteger(0, 30);
+  const commentArr = [];
+
+  if (count === 0) {
+    return 'Комментариев пока нет';
+  }
+
+  for (let i = 0; i <= count; i++) {
+    const commentObj = {
+      id: generateUserId(),
+      avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
+      message: createCommentMessage(),
+      name: getRandomArrayElement(NAME),
+    };
+    commentArr.push(commentObj);
+  }
+
+  return commentArr;
 }
 
-export { createCommentMessage };
+export { createUserComments };

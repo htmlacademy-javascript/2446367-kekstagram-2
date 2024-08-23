@@ -1,6 +1,5 @@
-
 import { openBigPictureModal } from './components/big-picture-modal.js';
-import { picturesContainer, renderPictureThumbnails } from './components/thumbnails.js';
+import { picturesContainer, renderPictureThumbnails } from './data/thumbnails-data.js';
 
 // отрисовка превью-изображений пользователей на странице
 renderPictureThumbnails();

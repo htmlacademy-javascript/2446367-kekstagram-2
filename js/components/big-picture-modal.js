@@ -1,6 +1,6 @@
 import { isEscapeKey } from '../utils.js';
 import { mockupPictures } from '../data/mocks-data.js';
-import { renderCommentList } from './comments-list.js';
+import { renderCommentsList, clearComments } from './comments-list.js';
 
 const bigPictureModal = document.querySelector('.big-picture');
 
@@ -9,14 +9,15 @@ const bigPictureImg = bigPictureModal.querySelector('.big-picture__img img');
 const bigPictureLikes = bigPictureModal.querySelector('.likes-count');
 const bigPictureCaption = bigPictureModal.querySelector('.social__caption');
 
-const commentsCount = bigPictureModal.querySelector('.social__comment-count');
-const commentsLoader = bigPictureModal.querySelector('.comments-loader');
-
 const onEscKeydown = (evt) => {
   if(isEscapeKey(evt)) {
     evt.preventDefault();
     closeBigPictureModal();
   }
+};
+
+const onCancelButtonClick = () => {
+  closeBigPictureModal();
 };
 
 // отрисовка изображения модального окна
@@ -35,26 +36,19 @@ const openBigPictureModal = (pictureId) => {
 
   const currentElement = mockupPictures.find((mockup) => mockup.id === Number(pictureId));
   renderBigPicture(currentElement);
-  renderCommentList(currentElement);
+  renderCommentsList(currentElement.comments);
 
-  commentsCount.classList.add('hidden');
-  commentsLoader.classList.add('hidden');
-
+  bigPictureCloseButton.addEventListener('click', onCancelButtonClick);
   document.addEventListener('keydown', onEscKeydown);
 };
 
 // закрытие модального окна
 function closeBigPictureModal () {
+  clearComments();
   document.removeEventListener('keydown', onEscKeydown);
 
   bigPictureModal.classList.add('hidden');
   document.body.classList.remove('modal-open');
 }
-
-const onCancelButtonClick = () => {
-  closeBigPictureModal();
-};
-
-bigPictureCloseButton.addEventListener('click', onCancelButtonClick);
 
 export { openBigPictureModal };

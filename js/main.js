@@ -1,5 +1,6 @@
 import { openBigPictureModal } from './components/big-picture-modal.js';
 import { picturesContainer, renderPictureThumbnails } from './data/thumbnails-data.js';
+import { openUploadModal } from './components/upload-form-modal.js';
 
 // отрисовка превью-изображений пользователей на странице
 renderPictureThumbnails();
@@ -13,3 +14,5 @@ picturesContainer.addEventListener('click', (evt) => {
     openBigPictureModal(currentElement.dataset.pictureId);
   }
 });
+// открытие модального окна загрузки файла
+openUploadModal();

@@ -16,9 +16,7 @@ const onEscKeydown = (evt) => {
   }
 };
 
-const onCancelButtonClick = () => {
-  closeBigPictureModal();
-};
+const onCancelButtonClick = () => closeBigPictureModal();
 
 // отрисовка изображения модального окна
 const renderBigPicture = (data) => {
@@ -42,7 +40,7 @@ const openBigPictureModal = (pictureId) => {
   document.addEventListener('keydown', onEscKeydown);
 };
 
-// закрытие модального окна
+// закрытие модального окна, hoisting
 function closeBigPictureModal () {
   clearComments();
   document.removeEventListener('keydown', onEscKeydown);

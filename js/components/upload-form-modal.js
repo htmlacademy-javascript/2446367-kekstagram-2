@@ -1,6 +1,6 @@
 import { isEscapeKey } from '../utils.js';
-import { error, isValidHashtag } from './validate-hashtag.js';
-import { isValidComment } from './validate-comment.js';
+import { hasError, isValidHashtag } from './validate-hashtag.js';
+import { ERROR_MESSAGE, isValidComment } from './validate-comment.js';
 
 const imgUploadForm = document.querySelector('.img-upload__form');
 
@@ -52,8 +52,8 @@ const pristine = new Pristine(imgUploadForm, {
   errorTextParent: 'img-upload__field-wrapper',
 }, false);
 
-pristine.addValidator(hashtagInput, isValidHashtag, error);
-pristine.addValidator(commentInput, isValidComment, 'Длина комментария не должна превышать 140 символов');
+pristine.addValidator(hashtagInput, isValidHashtag, hasError);
+pristine.addValidator(commentInput, isValidComment, ERROR_MESSAGE);
 
 // валидация полей и отправка формы
 const onFormSubmit = (evt) => {

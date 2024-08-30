@@ -3,7 +3,7 @@ const MAX_HASHTAGS_SYMBOLS = 20;
 
 let errorMessage = '';
 
-const error = () => errorMessage;
+const hasError = () => errorMessage;
 
 const isValidHashtag = (value) => {
   errorMessage = '';
@@ -31,7 +31,7 @@ const isValidHashtag = (value) => {
       error: 'Хэштег начинается с символа # (решётка)',
     },
     {
-      check: inputArray.some((item, num, array) => array.includes(item, num + 1)),
+      check: inputArray.some((item, index, array) => array.includes(item, index + 1)),
       error: 'Один и тот же хэштег не может быть использован дважды',
     },
     {
@@ -57,4 +57,4 @@ const isValidHashtag = (value) => {
   });
 };
 
-export {error, isValidHashtag};
+export {hasError, isValidHashtag};

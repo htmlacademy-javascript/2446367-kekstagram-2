@@ -8,7 +8,7 @@ const hasError = () => errorMessage;
 const isValidHashtag = (value) => {
   errorMessage = '';
 
-  const validateRegExp = /^#[a-zа-яё0-9]{1,19}$/i;
+  const validateRegExp = /^#[a-zа-яё0-9]{0,}$/i;
   const inputValue = value.toLowerCase().trim();
 
   if (inputValue.length === 0) {
@@ -48,13 +48,14 @@ const isValidHashtag = (value) => {
     },
   ];
 
-  return rules.every((rule) => {
-    const isInvalid = rule.check;
-    if (isInvalid) {
-      errorMessage = rule.error;
+  rules.forEach((rule) => {
+    if (rule.check === true) {
+      errorMessage +=
+      `<div>${rule.error}</div>`;
     }
-    return !isInvalid;
   });
+
+  return rules.every((rule) => rule.check === false);
 };
 
 export {hasError, isValidHashtag};

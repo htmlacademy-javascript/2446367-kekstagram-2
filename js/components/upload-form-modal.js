@@ -1,15 +1,23 @@
 import { isEscapeKey } from '../utils.js';
 import { hasError, isValidHashtag } from './validate-hashtag.js';
 import { ERROR_MESSAGE, isValidComment } from './validate-comment.js';
+import { onSmallerButtonClick, onBiggerButtonClick, resetScale } from './scale-changer.js';
+import { onEffectSlider, resetImgEffect } from './effect-slider.js';
 
 const imgUploadForm = document.querySelector('.img-upload__form');
 
-const imgUploadInput = document.querySelector('.img-upload__input');
-const imgUploadEditor = document.querySelector('.img-upload__overlay');
-const imgUploadCancelButton = document.querySelector('.img-upload__cancel');
+const imgUploadInput = imgUploadForm.querySelector('.img-upload__input');
+const imgUploadEditor = imgUploadForm.querySelector('.img-upload__overlay');
+const imgUploadCancelButton = imgUploadForm.querySelector('.img-upload__cancel');
 
-const hashtagInput = document.querySelector('.text__hashtags');
-const commentInput = document.querySelector('.text__description');
+const hashtagInput = imgUploadForm.querySelector('.text__hashtags');
+const commentInput = imgUploadForm.querySelector('.text__description');
+
+const scaleSmallerButton = imgUploadForm.querySelector('.scale__control--smaller');
+const scaleBiggerButton = imgUploadForm.querySelector('.scale__control--bigger');
+
+const effectsField = imgUploadForm.querySelector('.img-upload__effects');
+
 
 const onEscKeydown = (evt) => {
   if(isEscapeKey(evt)) {
@@ -39,11 +47,23 @@ const openUploadModal = () => {
 function closeUploadModal () {
   imgUploadForm.reset();
   document.removeEventListener('keydown', onEscKeydown);
+
   imgUploadEditor.classList.add('hidden');
   document.body.classList.remove('modal-open');
+
   imgUploadCancelButton.removeEventListener('click', onCancelButtonClick);
   imgUploadInput.value = '';
+
+  resetScale();
+  resetImgEffect();
 }
+
+// изменение масштаба изображения
+scaleSmallerButton.addEventListener('click', onSmallerButtonClick);
+scaleBiggerButton.addEventListener('click', onBiggerButtonClick);
+
+// изменение эффекта изображения
+effectsField.addEventListener('change', onEffectSlider);
 
 // подключение валидации полей хештега и комментария
 const pristine = new Pristine(imgUploadForm, {

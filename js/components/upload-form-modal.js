@@ -2,7 +2,7 @@ import { isEscapeKey } from '../utils.js';
 import { hasError, isValidHashtag } from './validate-hashtag.js';
 import { ERROR_MESSAGE, isValidComment } from './validate-comment.js';
 import { onSmallerButtonClick, onBiggerButtonClick, resetScale } from './scale-changer.js';
-import { onEffectSlider, resetEffect } from './effect-slider.js';
+import { onEffectSlider, resetImgEffect } from './effect-slider.js';
 
 const imgUploadForm = document.querySelector('.img-upload__form');
 
@@ -55,7 +55,7 @@ function closeUploadModal () {
   imgUploadInput.value = '';
 
   resetScale();
-  resetEffect();
+  resetImgEffect();
 }
 
 // изменение масштаба изображения

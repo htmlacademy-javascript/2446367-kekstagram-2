@@ -43,12 +43,49 @@ const heatPreset = {
   step: 0.1,
 };
 
+const effectPresets = {
+  none: marvinPreset,
+  chrome: chromePreset,
+  sepia: sepiaPreset,
+  marvin: marvinPreset,
+  phobos: phobosPreset,
+  heat: heatPreset,
+};
+
+const stylePresets = {
+  none: {
+    style: 'none',
+    unit: '',
+  },
+  chrome: {
+    style: 'grayscale',
+    unit: '',
+  },
+  sepia: {
+    style: 'sepia',
+    unit: '',
+  },
+  marvin: {
+    style: 'invert',
+    unit: '%',
+  },
+  phobos: {
+    style: 'blur',
+    unit: 'px',
+  },
+  heat: {
+    style: 'brightness',
+    unit: '',
+  },
+};
+
 const effectLevelInput = document.querySelector('.effect-level__value');
 const effectLevelSlider = document.querySelector('.effect-level__slider');
 
 const image = document.querySelector('.img-upload__preview img');
 const imgUploadEffectLevel = document.querySelector('.img-upload__effect-level');
 
+// скрытие слайдера при открытии модального окна редактирования
 imgUploadEffectLevel.classList.add('hidden');
 
 noUiSlider.create(effectLevelSlider, {
@@ -65,29 +102,7 @@ noUiSlider.create(effectLevelSlider, {
   }
 });
 
-effectLevelSlider.noUiSlider.on('update', () => {
-  effectLevelInput.value = effectLevelSlider.noUiSlider.get();
-});
-
-const effectPreset = {
-  none: marvinPreset,
-  chrome: chromePreset,
-  sepia: sepiaPreset,
-  marvin: marvinPreset,
-  phobos: phobosPreset,
-  heat: heatPreset,
-};
-
-const stylePreset = {
-  none: 'none',
-  chrome: `grayscale(${effectLevelInput.value})`,
-  sepia: `sepia(${effectLevelInput.value})`,
-  marvin: `invert(${effectLevelInput.value}%)`,
-  phobos: `blur(${effectLevelInput.value}px)`,
-  heat: `brightness(${effectLevelInput.value})`,
-};
-
-const resetImgEffect = () => {
+const resetEffectClassName = () => {
   image.classList.forEach((item) => {
     if (item.includes('effects__preview--')) {
       image.classList.remove(item);
@@ -95,35 +110,40 @@ const resetImgEffect = () => {
   });
 };
 
+const resetImgEffect = () => {
+  image.removeAttribute('class');
+  image.removeAttribute('style');
+  imgUploadEffectLevel.classList.add('hidden');
+};
+
 const updateImgEffect = (effect) => {
   if (effect) {
     image.classList.add(`effects__preview--${effect}`);
-    image.style.filter = stylePreset[effect];
+
+    effectLevelSlider.noUiSlider.on('update', () => {
+      const range = effectLevelSlider.noUiSlider.get();
+      image.style.filter = `${stylePresets[effect].style}(${range}${stylePresets[effect].unit})`;
+      effectLevelInput.value = range;
+    });
   }
 
   if (effect !== 'none') {
     imgUploadEffectLevel.classList.remove('hidden');
   } else {
-    resetEffect();
+    resetImgEffect();
   }
 };
 
-const updateSlider = (effect) => {
-  effectLevelSlider.noUiSlider.updateOptions(effectPreset[effect]);
+const updateEffectSlider = (effect) => {
+  effectLevelSlider.noUiSlider.updateOptions(effectPresets[effect]);
 };
 
 const onEffectSlider = (evt) => {
-  const effect = evt.target.value;
+  const imgEffect = evt.target.value;
 
-  resetImgEffect();
-  updateSlider(effect);
-  updateImgEffect(effect);
+  resetEffectClassName();
+  updateEffectSlider(imgEffect);
+  updateImgEffect(imgEffect);
 };
 
-function resetEffect () {
-  image.removeAttribute('class');
-  image.removeAttribute('style');
-  imgUploadEffectLevel.classList.add('hidden');
-}
-
-export {onEffectSlider, resetEffect};
+export {onEffectSlider, resetImgEffect};

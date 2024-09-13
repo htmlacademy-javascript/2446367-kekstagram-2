@@ -8,7 +8,7 @@ const hasError = () => errorMessage;
 const isValidHashtag = (value) => {
   errorMessage = '';
 
-  const validateRegExp = /^#[a-zа-яё0-9]{0,}$/i;
+  const validateRegExp = /^[#a-zа-яё0-9]{0,}$/i;
   const inputValue = value.toLowerCase().trim();
 
   if (inputValue.length === 0) {

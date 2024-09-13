@@ -1,5 +1,4 @@
 import { isEscapeKey } from '../utils.js';
-import { mockupPictures } from '../data/mocks-data.js';
 import { renderCommentsList, clearComments } from './comments-list.js';
 
 const bigPictureModal = document.querySelector('.big-picture');
@@ -28,25 +27,24 @@ const renderBigPicture = (data) => {
 };
 
 // открытие модального окна
-const openBigPictureModal = (pictureId) => {
+const openBigPictureModal = (pictureId, data) => {
   bigPictureModal.classList.remove('hidden');
   document.body.classList.add('modal-open');
 
-  const currentElement = mockupPictures.find((mockup) => mockup.id === Number(pictureId));
+  const currentElement = data.find((mockup) => mockup.id === Number(pictureId));
   renderBigPicture(currentElement);
   renderCommentsList(currentElement.comments);
 
-  bigPictureCloseButton.addEventListener('click', onCancelButtonClick);
-  document.addEventListener('keydown', onEscKeydown);
+  bigPictureCloseButton.addEventListener('click', onCancelButtonClick, {once: true});
+  document.addEventListener('keydown', onEscKeydown, {once: true});
 };
 
 // закрытие модального окна, hoisting
 function closeBigPictureModal () {
   clearComments();
-  document.removeEventListener('keydown', onEscKeydown);
 
   bigPictureModal.classList.add('hidden');
   document.body.classList.remove('modal-open');
 }
 
-export { openBigPictureModal };
+export { openBigPictureModal, closeBigPictureModal };

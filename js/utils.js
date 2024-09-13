@@ -30,4 +30,8 @@ const getRandomArrayElement = (elements) => elements[getRandomInteger(0, element
 // проверка нажатой клавиши
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export { getRandomInteger, getRandomUniqueInteger, getRandomArrayElement, isEscapeKey};
+export {
+  getRandomInteger,
+  getRandomUniqueInteger,
+  getRandomArrayElement,
+  isEscapeKey};

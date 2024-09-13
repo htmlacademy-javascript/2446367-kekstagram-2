@@ -3,6 +3,8 @@ import { hasError, isValidHashtag } from './validate-hashtag.js';
 import { ERROR_MESSAGE, isValidComment } from './validate-comment.js';
 import { onSmallerButtonClick, onBiggerButtonClick, resetScale } from './scale-changer.js';
 import { onEffectSlider, resetImgEffect } from './effect-slider.js';
+import { sendData } from '../api.js';
+import { hasPostErrorMessage } from './alert-messages/error-message.js';
 
 const imgUploadForm = document.querySelector('.img-upload__form');
 
@@ -17,7 +19,6 @@ const scaleSmallerButton = imgUploadForm.querySelector('.scale__control--smaller
 const scaleBiggerButton = imgUploadForm.querySelector('.scale__control--bigger');
 
 const effectsField = imgUploadForm.querySelector('.img-upload__effects');
-
 
 const onEscKeydown = (evt) => {
   if(isEscapeKey(evt)) {
@@ -38,20 +39,18 @@ const openUploadModal = () => {
     imgUploadEditor.classList.remove('hidden');
     document.body.classList.add('modal-open');
 
-    imgUploadCancelButton.addEventListener('click', onCancelButtonClick);
-    document.addEventListener('keydown', onEscKeydown);
+    imgUploadCancelButton.addEventListener('click', onCancelButtonClick, {once: true});
+    document.addEventListener('keydown', onEscKeydown, {once: true});
   });
 };
 
 // закрытие модального окна загрузки файла, hoisting
 function closeUploadModal () {
   imgUploadForm.reset();
-  document.removeEventListener('keydown', onEscKeydown);
 
   imgUploadEditor.classList.add('hidden');
   document.body.classList.remove('modal-open');
 
-  imgUploadCancelButton.removeEventListener('click', onCancelButtonClick);
   imgUploadInput.value = '';
 
   resetScale();
@@ -75,16 +74,20 @@ const pristine = new Pristine(imgUploadForm, {
 pristine.addValidator(hashtagInput, isValidHashtag, hasError);
 pristine.addValidator(commentInput, isValidComment, ERROR_MESSAGE);
 
-// валидация полей и отправка формы
-const onFormSubmit = (evt) => {
-  evt.preventDefault();
+// отправка формы
+const setUserFormSubmit = (onSuccess) => {
+  imgUploadForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
 
-  if (pristine.validate()) {
-    hashtagInput.value = hashtagInput.value.replaceAll(/\s+/g, ' ');
-    imgUploadForm.submit();
-  }
+    if (pristine.validate()) {
+      hashtagInput.value = hashtagInput.value.replaceAll(/\s+/g, ' ');
+      sendData(new FormData(evt.target))
+        .then(onSuccess)
+        .catch(() => {
+          hasPostErrorMessage();
+        });
+    }
+  });
 };
 
-imgUploadForm.addEventListener('submit', onFormSubmit);
-
-export {openUploadModal};
+export {openUploadModal, closeUploadModal, setUserFormSubmit};

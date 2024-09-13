@@ -1,12 +1,10 @@
-import { mockupPictures } from './mocks-data.js';
-
 const picturesContainer = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
-const renderPictureThumbnails = () => {
+const renderPictureThumbnails = (pictureThumbnails) => {
   const thumbnailsListFragment = document.createDocumentFragment();
 
-  mockupPictures.forEach(({id, url, description, likes, comments}) => {
+  pictureThumbnails.forEach(({id, url, description, likes, comments}) => {
     const thumbnailElement = pictureTemplate.cloneNode(true);
 
     thumbnailElement.dataset.pictureId = id;
@@ -17,7 +15,7 @@ const renderPictureThumbnails = () => {
 
     thumbnailElement.querySelector('.picture__likes').textContent = likes;
 
-    if (comments !== 'Комментариев пока нет') {
+    if (comments !== 0) {
       thumbnailElement.querySelector('.picture__comments').textContent = comments.length;
     } else {
       thumbnailElement.querySelector('.picture__comments').textContent = 0;

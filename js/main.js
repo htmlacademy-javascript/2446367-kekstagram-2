@@ -1,9 +1,11 @@
 import { openBigPictureModal } from './components/big-picture-modal.js';
-import { picturesContainer, renderPictureThumbnails } from './data/thumbnails-data.js';
-import { openUploadModal } from './components/upload-form-modal.js';
+import { picturesContainer } from './components/thumbnails.js';
+import { openUploadModal, setUserFormSubmit, closeUploadModal } from './components/upload-form-modal.js';
+import { getData, receivedData } from './api.js';
+import './components/upload-form-modal.js';
 
-// отрисовка превью-изображений пользователей на странице
-renderPictureThumbnails();
+// загрузка и отрисовка превью-изображений пользователей на странице
+getData();
 
 // добавление обработчика открытия модального окна на контейнер превью-изображений
 picturesContainer.addEventListener('click', (evt) => {
@@ -11,8 +13,10 @@ picturesContainer.addEventListener('click', (evt) => {
 
   if (currentElement) {
     evt.preventDefault();
-    openBigPictureModal(currentElement.dataset.pictureId);
+    openBigPictureModal(currentElement.dataset.pictureId, receivedData);
   }
 });
+
 // открытие модального окна загрузки файла
 openUploadModal();
+setUserFormSubmit(closeUploadModal);

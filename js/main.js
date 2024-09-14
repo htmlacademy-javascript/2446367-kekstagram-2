@@ -19,4 +19,6 @@ picturesContainer.addEventListener('click', (evt) => {
 
 // открытие модального окна загрузки файла
 openUploadModal();
+
+// отправка формы и закрытие модального окна загрузки файла
 setUserFormSubmit(closeUploadModal);

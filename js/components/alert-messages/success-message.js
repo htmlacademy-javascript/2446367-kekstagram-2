@@ -3,6 +3,7 @@ import { isEscapeKey } from '../../utils.js';
 const successMessage = document.querySelector('#success').content
   .querySelector('.success');
 
+// функции и сообщение об успешной отправке данных
 const closeSuccessMessage = () => {
   successMessage.remove();
 };

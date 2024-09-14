@@ -6,6 +6,17 @@ const dataErrorMessage = document.querySelector('#data-error').content
 const postErrorMessage = document.querySelector('#error').content
   .querySelector('.error');
 
+// сообщение об ошибке загрузки данных
+const hasDataErrorMessage = () => {
+  document.body.append(dataErrorMessage);
+  setTimeout(() => {
+    if (dataErrorMessage) {
+      dataErrorMessage.remove();
+    }
+  }, ERROR_SHOW_TIME);
+};
+
+// функции и сообщение об ошибке отправки данных
 const closePostErrorMessage = () => {
   postErrorMessage.remove();
 };
@@ -25,15 +36,6 @@ const onOutsideContainerClick = (evt, element) => {
   }
 };
 
-const hasDataErrorMessage = () => {
-  document.body.append(dataErrorMessage);
-  setTimeout(() => {
-    if (dataErrorMessage) {
-      dataErrorMessage.remove();
-    }
-  }, ERROR_SHOW_TIME);
-};
-
 const hasPostErrorMessage = () => {
   document.body.append(postErrorMessage);
 
@@ -47,4 +49,4 @@ const hasPostErrorMessage = () => {
   }
 };
 
-export {hasDataErrorMessage, hasPostErrorMessage};
+export {hasDataErrorMessage, hasPostErrorMessage, postErrorMessage};

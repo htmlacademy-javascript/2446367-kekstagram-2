@@ -6,6 +6,8 @@ const effectLevelSlider = document.querySelector('.effect-level__slider');
 const image = document.querySelector('.img-upload__preview img');
 const imgUploadEffectLevel = document.querySelector('.img-upload__effect-level');
 
+let currentEffect = 'none';
+
 // скрытие слайдера при открытии модального окна редактирования
 imgUploadEffectLevel.classList.add('hidden');
 
@@ -35,17 +37,12 @@ const resetImgEffect = () => {
   image.removeAttribute('class');
   image.removeAttribute('style');
   imgUploadEffectLevel.classList.add('hidden');
+  effectLevelSlider.noUiSlider.off();
 };
 
 const updateImgEffect = (effect) => {
   if (effect) {
     image.classList.add(`effects__preview--${effect}`);
-
-    effectLevelSlider.noUiSlider.on('update', () => {
-      const range = effectLevelSlider.noUiSlider.get();
-      image.style.filter = `${stylePresets[effect].style}(${range}${stylePresets[effect].unit})`;
-      effectLevelInput.value = range;
-    });
   }
 
   if (effect !== 'none') {
@@ -55,7 +52,14 @@ const updateImgEffect = (effect) => {
   }
 };
 
+effectLevelSlider.noUiSlider.on('update', () => {
+  const range = effectLevelSlider.noUiSlider.get();
+  image.style.filter = `${stylePresets[currentEffect].style}(${range}${stylePresets[currentEffect].unit})`;
+  effectLevelInput.value = range;
+});
+
 const updateEffectSlider = (effect) => {
+  currentEffect = effect;
   effectLevelSlider.noUiSlider.updateOptions(effectPresets[effect]);
 };
 

@@ -21,11 +21,12 @@ const scaleBiggerButton = imgUploadForm.querySelector('.scale__control--bigger')
 const effectsField = imgUploadForm.querySelector('.img-upload__effects');
 
 const onEscKeydown = (evt) => {
+  const postErrorMessage = document.querySelector('.error');
   if(isEscapeKey(evt)) {
     evt.preventDefault();
     if (document.activeElement === hashtagInput || document.activeElement === commentInput) {
       evt.stopPropagation();
-    } else {
+    } else if (!postErrorMessage) {
       closeUploadModal();
     }
   }
@@ -39,14 +40,16 @@ const openUploadModal = () => {
     imgUploadEditor.classList.remove('hidden');
     document.body.classList.add('modal-open');
 
-    imgUploadCancelButton.addEventListener('click', onCancelButtonClick, {once: true});
-    document.addEventListener('keydown', onEscKeydown, {once: true});
+    imgUploadCancelButton.addEventListener('click', onCancelButtonClick);
+    document.addEventListener('keydown', onEscKeydown);
   });
 };
 
 // закрытие модального окна загрузки файла, hoisting
 function closeUploadModal () {
   imgUploadForm.reset();
+
+  document.removeEventListener('keydown', onEscKeydown);
 
   imgUploadEditor.classList.add('hidden');
   document.body.classList.remove('modal-open');

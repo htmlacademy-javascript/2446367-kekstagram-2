@@ -1,6 +1,7 @@
 import { hasDataErrorMessage } from './components/alert-messages/error-message.js';
 import { hasSuccessMessage } from './components/alert-messages/success-message.js';
 import { renderPictureThumbnails } from './components/thumbnails.js';
+import { showImgFilter} from './components/filter.js';
 
 const BASE_URL_GET = 'https://31.javascript.htmlacademy.pro/kekstagram/data';
 const BASE_URL_SEND = 'https://31.javascript.htmlacademy.pro/kekstagram';
@@ -18,6 +19,7 @@ const getData = () => fetch(BASE_URL_GET)
   .then((data) => {
     renderPictureThumbnails(data);
     receivedData = data;
+    showImgFilter();
   })
   .catch(() => {
     hasDataErrorMessage();

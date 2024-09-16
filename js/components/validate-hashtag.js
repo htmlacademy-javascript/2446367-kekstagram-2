@@ -1,6 +1,6 @@
-const MAX_HASHTAGS_COUNT = 5;
-const MAX_HASHTAGS_SYMBOLS = 20;
+import { MAX_HASHTAGS_COUNT, MAX_HASHTAGS_SYMBOLS } from '../data.js';
 
+// определение сообщения об ошибке валидации
 let errorMessage = '';
 
 const hasError = () => errorMessage;

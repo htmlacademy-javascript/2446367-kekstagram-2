@@ -1,8 +1,9 @@
 import { isEscapeKey } from '../utils.js';
+import { ERROR_MESSAGE } from '../data.js';
 import { hasError, isValidHashtag } from './validate-hashtag.js';
-import { ERROR_MESSAGE, isValidComment } from './validate-comment.js';
+import { isValidComment } from './validate-comment.js';
 import { onSmallerButtonClick, onBiggerButtonClick, resetScale } from './scale-changer.js';
-import { onEffectSlider, resetImgEffect } from './effect-slider.js';
+import { onEffectSlider, resetImgEffect } from './effect-changer.js';
 import { sendData } from '../api.js';
 import { hasPostErrorMessage } from './alert-messages/error-message.js';
 
@@ -93,4 +94,4 @@ const setUserFormSubmit = (onSuccess) => {
   });
 };
 
-export {openUploadModal, closeUploadModal, setUserFormSubmit};
+export { openUploadModal, closeUploadModal, setUserFormSubmit };

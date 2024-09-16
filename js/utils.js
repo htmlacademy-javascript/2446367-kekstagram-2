@@ -77,4 +77,4 @@ export {
   isEscapeKey,
   debounce,
   throttle,
-  shuffle};
+  shuffle };

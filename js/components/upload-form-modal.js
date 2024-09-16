@@ -1,8 +1,9 @@
 import { isEscapeKey } from '../utils.js';
+import { ERROR_MESSAGE } from '../data.js';
 import { hasError, isValidHashtag } from './validate-hashtag.js';
-import { ERROR_MESSAGE, isValidComment } from './validate-comment.js';
+import { isValidComment } from './validate-comment.js';
 import { onSmallerButtonClick, onBiggerButtonClick, resetScale } from './scale-changer.js';
-import { onEffectSlider, resetImgEffect } from './effect-slider.js';
+import { onEffectSlider, resetImgEffect } from './effect-changer.js';
 import { sendData } from '../api.js';
 import { hasPostErrorMessage } from './alert-messages/error-message.js';
 
@@ -21,11 +22,12 @@ const scaleBiggerButton = imgUploadForm.querySelector('.scale__control--bigger')
 const effectsField = imgUploadForm.querySelector('.img-upload__effects');
 
 const onEscKeydown = (evt) => {
+  const postErrorMessage = document.querySelector('.error');
   if(isEscapeKey(evt)) {
     evt.preventDefault();
     if (document.activeElement === hashtagInput || document.activeElement === commentInput) {
       evt.stopPropagation();
-    } else {
+    } else if (!postErrorMessage) {
       closeUploadModal();
     }
   }
@@ -39,14 +41,16 @@ const openUploadModal = () => {
     imgUploadEditor.classList.remove('hidden');
     document.body.classList.add('modal-open');
 
-    imgUploadCancelButton.addEventListener('click', onCancelButtonClick, {once: true});
-    document.addEventListener('keydown', onEscKeydown, {once: true});
+    imgUploadCancelButton.addEventListener('click', onCancelButtonClick);
+    document.addEventListener('keydown', onEscKeydown);
   });
 };
 
 // закрытие модального окна загрузки файла, hoisting
 function closeUploadModal () {
   imgUploadForm.reset();
+
+  document.removeEventListener('keydown', onEscKeydown);
 
   imgUploadEditor.classList.add('hidden');
   document.body.classList.remove('modal-open');
@@ -90,4 +94,4 @@ const setUserFormSubmit = (onSuccess) => {
   });
 };
 
-export {openUploadModal, closeUploadModal, setUserFormSubmit};
+export { openUploadModal, closeUploadModal, setUserFormSubmit };

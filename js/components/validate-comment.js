@@ -1,9 +1,5 @@
-const MAX_COMMENT_LENGTH = 140;
-const ERROR_MESSAGE = `Длина комментария не должна превышать ${MAX_COMMENT_LENGTH} символов`;
+import { MAX_COMMENT_LENGTH } from '../data.js';
 
-const isValidComment = (value) => {
-  const commentValid = value.length <= MAX_COMMENT_LENGTH;
-  return commentValid;
-};
+const isValidComment = (value) => value.length <= MAX_COMMENT_LENGTH;
 
-export {ERROR_MESSAGE, isValidComment};
+export { isValidComment };

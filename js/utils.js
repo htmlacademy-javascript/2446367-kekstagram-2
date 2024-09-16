@@ -30,8 +30,51 @@ const getRandomArrayElement = (elements) => elements[getRandomInteger(0, element
 // проверка нажатой клавиши
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
+// устранение "дребезга"
+const debounce = (callback, timeoutDelay = 500) => {
+  let timeoutId;
+
+  return (...rest) => {
+    clearTimeout(timeoutId);
+
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
+// пропуск кадров
+const throttle = (callback, delayBetweenFrames) => {
+  let lastTime = 0;
+
+  return (...rest) => {
+    const now = new Date();
+
+    if (now - lastTime >= delayBetweenFrames) {
+      callback.apply(this, rest);
+      lastTime = now;
+    }
+  };
+};
+
+// тасование Фишера-Йетса
+const shuffle = (array) => {
+  let m = array.length, t, i;
+
+  while (m) {
+    i = Math.floor(Math.random() * m--);
+
+    t = array[m];
+    array[m] = array[i];
+    array[i] = t;
+  }
+
+  return array;
+};
+
 export {
   getRandomInteger,
   getRandomUniqueInteger,
   getRandomArrayElement,
-  isEscapeKey};
+  isEscapeKey,
+  debounce,
+  throttle,
+  shuffle };

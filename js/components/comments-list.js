@@ -1,4 +1,5 @@
-const COUNT_STEP = 5;
+import { COUNT_STEP } from '../data.js';
+
 let currentCount = 0;
 let comments = [];
 
@@ -66,4 +67,4 @@ const renderCommentsList = (currentPhotoComment) => {
   commentLoader.addEventListener('click', renderPartComments);
 };
 
-export {renderCommentsList, clearComments};
+export { renderCommentsList, clearComments };

@@ -1,7 +1,31 @@
+import { setRandomButtonClick, setDiscussedButtonClick } from './filter.js';
+
 const picturesContainer = document.querySelector('.pictures');
-const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
+const pictureTemplate = document.querySelector('#picture').content
+  .querySelector('.picture');
+
+const hasActiveFilter = (data) => {
+  const imgFiltersContainer = document.querySelector('.img-filters');
+  const activeFilterElement = imgFiltersContainer.querySelector('.img-filters__button--active');
+
+  if (activeFilterElement.id === 'filter-random') {
+    data = setRandomButtonClick(data);
+  }
+  if (activeFilterElement.id === 'filter-discussed') {
+    data = setDiscussedButtonClick(data);
+  }
+  return data;
+};
+
+const resetPicturesContainer = () => {
+  const pictureContainerElements = picturesContainer.querySelectorAll('.picture');
+  pictureContainerElements.forEach((item) => item.remove());
+};
 
 const renderPictureThumbnails = (pictureThumbnails) => {
+  pictureThumbnails = hasActiveFilter(pictureThumbnails.slice());
+  resetPicturesContainer();
+
   const thumbnailsListFragment = document.createDocumentFragment();
 
   pictureThumbnails.forEach(({id, url, description, likes, comments}) => {
@@ -14,12 +38,7 @@ const renderPictureThumbnails = (pictureThumbnails) => {
     thumbnailElementImg.alt = description;
 
     thumbnailElement.querySelector('.picture__likes').textContent = likes;
-
-    if (comments !== 0) {
-      thumbnailElement.querySelector('.picture__comments').textContent = comments.length;
-    } else {
-      thumbnailElement.querySelector('.picture__comments').textContent = 0;
-    }
+    thumbnailElement.querySelector('.picture__comments').textContent = comments ? comments.length : 0;
 
     thumbnailsListFragment.appendChild(thumbnailElement);
   });
@@ -27,4 +46,4 @@ const renderPictureThumbnails = (pictureThumbnails) => {
   picturesContainer.appendChild(thumbnailsListFragment);
 };
 
-export {renderPictureThumbnails, picturesContainer};
+export { renderPictureThumbnails };

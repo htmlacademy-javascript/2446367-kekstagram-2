@@ -6,6 +6,7 @@ import { onSmallerButtonClick, onBiggerButtonClick, resetScale } from './scale-c
 import { onEffectSlider, resetImgEffect } from './effect-changer.js';
 import { sendData } from '../api.js';
 import { hasPostErrorMessage } from './alert-messages/error-message.js';
+import { blockSubmitButton, unblockSubmitButton } from './submit-button.js';
 
 const imgUploadForm = document.querySelector('.img-upload__form');
 
@@ -84,12 +85,14 @@ const setUserFormSubmit = (onSuccess) => {
     evt.preventDefault();
 
     if (pristine.validate()) {
+      blockSubmitButton();
       hashtagInput.value = hashtagInput.value.replaceAll(/\s+/g, ' ');
       sendData(new FormData(evt.target))
         .then(onSuccess)
         .catch(() => {
           hasPostErrorMessage();
-        });
+        })
+        .finally(unblockSubmitButton);
     }
   });
 };

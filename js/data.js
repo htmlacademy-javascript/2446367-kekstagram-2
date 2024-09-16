@@ -2,6 +2,9 @@
 const BASE_URL_GET = 'https://31.javascript.htmlacademy.pro/kekstagram/data';
 const BASE_URL_SEND = 'https://31.javascript.htmlacademy.pro/kekstagram';
 
+// определение расширений для загружаемых файлов
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+
 // определение данных для валидации хэштега
 const MAX_HASHTAGS_COUNT = 5;
 const MAX_HASHTAGS_SYMBOLS = 20;
@@ -110,6 +113,7 @@ const StylePreset = {
 export {
   BASE_URL_GET,
   BASE_URL_SEND,
+  FILE_TYPES,
   RANDOM_PHOTO_COUNT,
   MAX_HASHTAGS_COUNT,
   MAX_HASHTAGS_SYMBOLS,

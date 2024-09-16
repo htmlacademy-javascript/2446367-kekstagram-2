@@ -1,3 +1,4 @@
+import './components/upload-photo.js';
 import { openBigPictureModal } from './components/big-picture-modal.js';
 import { openUploadModal, setUserFormSubmit, closeUploadModal } from './components/upload-form-modal.js';
 import { getData } from './api.js';

@@ -1,6 +1,16 @@
-// определение адресов сервера
+// определение данных для работы с сервером
 const BASE_URL_GET = 'https://31.javascript.htmlacademy.pro/kekstagram/data';
-const BASE_URL_SEND = 'https://31.javascript.htmlacademy.pro/kekstagram';
+const BASE_URL_SEND = 'https://31.javascript.htmlacademy.pro/kekstagram/';
+
+const Method = {
+  GET: 'GET',
+  POST: 'POST',
+};
+
+const ErrorText = {
+  GET_DATA: 'Не удалось загрузить данные. Попробуйте обновить страницу',
+  SEND_DATA: 'Не удалось отправить форму. Попробуйте ещё раз',
+};
 
 // определение расширений для загружаемых файлов
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
@@ -123,5 +133,7 @@ export {
   COUNT_STEP,
   ERROR_SHOW_TIME,
   RENDER_DELAY,
+  Method,
+  ErrorText,
   EffectPreset,
   StylePreset };

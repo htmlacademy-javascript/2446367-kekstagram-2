@@ -14,7 +14,7 @@ const setRandomButtonClick = (data) => shuffle(data).slice(0, RANDOM_PHOTO_COUNT
 const compareComments = (elementA, elementB) => elementB.comments.length - elementA.comments.length;
 const setDiscussedButtonClick = (data) => data.sort(compareComments);
 
-const handleFiltersButtonClick = (evt) => {
+const onFiltersButtonClick = (evt) => {
   const activeFilter = evt.target;
 
   imgFiltersButtons.forEach((item) => {
@@ -27,7 +27,7 @@ const changeFilter = (cb) => {
   imgFiltersContainer.addEventListener('click', (evt) => {
     evt.preventDefault();
     if (evt.target.className === 'img-filters__button') {
-      handleFiltersButtonClick(evt);
+      onFiltersButtonClick(evt);
       cb();
     }
   });

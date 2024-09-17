@@ -1,28 +1,19 @@
-import { BASE_URL_GET, BASE_URL_SEND } from './data.js';
-import { hasDataErrorMessage } from './components/alert-messages/error-message.js';
-import { hasSuccessMessage } from './components/alert-messages/success-message.js';
+import { BASE_URL_GET, BASE_URL_SEND, Method, ErrorText } from './data.js';
 
-const getData = () => fetch(BASE_URL_GET)
-  .then((response) => {
-    if (!response.ok) {
-      throw new Error;
-    }
-    return response.json();
-  })
-  .catch(() => {
-    hasDataErrorMessage();
-  });
+const load = (route, errorText, method = Method.GET, body = null) =>
+  fetch(route, {method, body})
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error();
+      }
+      return response.json();
+    })
+    .catch(() => {
+      throw new Error(errorText);
+    });
 
-const sendData = (body) => fetch(BASE_URL_SEND, {
-  method: 'POST',
-  body: body,
-})
-  .then((response) => {
-    if (!response.ok) {
-      throw new Error;
-    } else {
-      hasSuccessMessage();
-    }
-  });
+const getData = () => load(BASE_URL_GET, ErrorText.GET_DATA);
+
+const sendData = (body) => load(BASE_URL_SEND, ErrorText.SEND_DATA, Method.POST, body);
 
 export { getData, sendData };

@@ -1,8 +1,5 @@
 import { COUNT_STEP } from '../data.js';
 
-let currentCount = 0;
-let comments = [];
-
 const bigPictureModal = document.querySelector('.big-picture');
 
 const commentsList = document.querySelector('.social__comments');
@@ -12,6 +9,9 @@ const commentCount = bigPictureModal.querySelector('.social__comment-count');
 
 const commentShowCount = bigPictureModal.querySelector('.social__comment-shown-count');
 const commentTotalCount = bigPictureModal.querySelector('.social__comment-total-count');
+
+let currentCount = 0;
+let comments = [];
 
 commentsList.innerHTML = '';
 
@@ -59,7 +59,7 @@ const clearComments = () => {
   commentLoader.removeEventListener('click', renderPartComments);
 };
 
-// отрисовка остальных комментариев по клику
+// отрисовка остальных комментариев по клику на кнопку
 const renderCommentsList = (currentPhotoComment) => {
   comments = currentPhotoComment;
   renderPartComments();

@@ -3,9 +3,10 @@ import { ERROR_MESSAGE } from '../data.js';
 import { hasError, isValidHashtag } from './validate-hashtag.js';
 import { isValidComment } from './validate-comment.js';
 import { onSmallerButtonClick, onBiggerButtonClick, resetScale } from './scale-changer.js';
-import { onEffectSlider, resetImgEffect } from './effect-changer.js';
+import { onEffectPreview, resetImgEffect } from './effect-changer.js';
 import { sendData } from '../api.js';
 import { hasPostErrorMessage } from './alert-messages/error-message.js';
+import { hasSuccessMessage } from './alert-messages/success-message.js';
 import { blockSubmitButton, unblockSubmitButton } from './submit-button.js';
 
 const imgUploadForm = document.querySelector('.img-upload__form');
@@ -47,7 +48,7 @@ const openUploadModal = () => {
   });
 };
 
-// закрытие модального окна загрузки файла, hoisting
+// декларативное объявление функции для поднятия
 function closeUploadModal () {
   imgUploadForm.reset();
 
@@ -58,6 +59,7 @@ function closeUploadModal () {
 
   imgUploadInput.value = '';
 
+  resetPristine();
   resetScale();
   resetImgEffect();
 }
@@ -67,7 +69,7 @@ scaleSmallerButton.addEventListener('click', onSmallerButtonClick);
 scaleBiggerButton.addEventListener('click', onBiggerButtonClick);
 
 // изменение эффекта изображения
-effectsField.addEventListener('change', onEffectSlider);
+effectsField.addEventListener('change', onEffectPreview);
 
 // подключение валидации полей хештега и комментария
 const pristine = new Pristine(imgUploadForm, {
@@ -79,6 +81,11 @@ const pristine = new Pristine(imgUploadForm, {
 pristine.addValidator(hashtagInput, isValidHashtag, hasError);
 pristine.addValidator(commentInput, isValidComment, ERROR_MESSAGE);
 
+// удаление валидатора, hoisting
+function resetPristine () {
+  pristine.reset();
+}
+
 // отправка формы
 const setUserFormSubmit = (onSuccess) => {
   imgUploadForm.addEventListener('submit', (evt) => {
@@ -87,8 +94,12 @@ const setUserFormSubmit = (onSuccess) => {
     if (pristine.validate()) {
       blockSubmitButton();
       hashtagInput.value = hashtagInput.value.replaceAll(/\s+/g, ' ');
+
       sendData(new FormData(evt.target))
         .then(onSuccess)
+        .then(() => {
+          hasSuccessMessage();
+        })
         .catch(() => {
           hasPostErrorMessage();
         })

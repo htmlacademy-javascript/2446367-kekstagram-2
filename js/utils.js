@@ -41,20 +41,6 @@ const debounce = (callback, timeoutDelay = 500) => {
   };
 };
 
-// пропуск кадров
-const throttle = (callback, delayBetweenFrames) => {
-  let lastTime = 0;
-
-  return (...rest) => {
-    const now = new Date();
-
-    if (now - lastTime >= delayBetweenFrames) {
-      callback.apply(this, rest);
-      lastTime = now;
-    }
-  };
-};
-
 // тасование Фишера-Йетса
 const shuffle = (array) => {
   let m = array.length, t, i;
@@ -76,5 +62,4 @@ export {
   getRandomArrayElement,
   isEscapeKey,
   debounce,
-  throttle,
   shuffle };

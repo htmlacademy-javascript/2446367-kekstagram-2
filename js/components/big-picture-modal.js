@@ -17,7 +17,6 @@ const onEscKeydown = (evt) => {
 
 const onCancelButtonClick = () => closeBigPictureModal();
 
-// отрисовка изображения модального окна
 const renderBigPicture = (data) => {
   bigPictureImg.src = data.url;
   bigPictureImg.alt = data.description;
@@ -26,7 +25,6 @@ const renderBigPicture = (data) => {
   bigPictureCaption.textContent = data.description;
 };
 
-// открытие модального окна
 const openBigPictureModal = (pictureId, data) => {
   bigPictureModal.classList.remove('hidden');
   document.body.classList.add('modal-open');
@@ -39,7 +37,7 @@ const openBigPictureModal = (pictureId, data) => {
   document.addEventListener('keydown', onEscKeydown, {once: true});
 };
 
-// закрытие модального окна, hoisting
+// декларативное объявление функции для поднятия
 function closeBigPictureModal () {
   clearComments();
 

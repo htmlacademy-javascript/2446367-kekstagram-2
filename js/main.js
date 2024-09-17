@@ -6,6 +6,7 @@ import { renderPictureThumbnails } from './components/thumbnails.js';
 import { showImgFilter, changeFilter } from './components/filter.js';
 import { debounce } from './utils.js';
 import { RENDER_DELAY } from './data.js';
+import { hasDataErrorMessage } from './components/alert-messages/error-message.js';
 
 // загрузка и отрисовка превью-изображений пользователей на странице
 
@@ -18,6 +19,9 @@ getData()
     receivedData = data;
     showImgFilter();
     changeFilter(debounce(() => renderPictureThumbnails(data), RENDER_DELAY));
+  })
+  .catch(() => {
+    hasDataErrorMessage();
   });
 
 // добавление обработчика открытия модального окна на контейнер превью-изображений

@@ -64,7 +64,7 @@ const updateEffectSlider = (effect) => {
   effectLevelSlider.noUiSlider.updateOptions(EffectPreset[effect]);
 };
 
-const onEffectSlider = (evt) => {
+const onEffectPreview = (evt) => {
   const imgEffect = evt.target.value;
 
   resetImgEffectClassName();
@@ -72,4 +72,4 @@ const onEffectSlider = (evt) => {
   updateImgEffect(imgEffect);
 };
 
-export { onEffectSlider, resetImgEffect };
+export { onEffectPreview, resetImgEffect };

@@ -1,6 +1,6 @@
 import { MAX_HASHTAGS_COUNT, MAX_HASHTAGS_SYMBOLS } from '../data.js';
 
-// определение сообщения об ошибке валидации
+// переменная для сообщения об ошибке валидации
 let errorMessage = '';
 
 const hasError = () => errorMessage;
@@ -58,4 +58,4 @@ const isValidHashtag = (value) => {
   return rules.every((rule) => rule.check === false);
 };
 
-export {hasError, isValidHashtag};
+export { hasError, isValidHashtag };

@@ -17,10 +17,6 @@ const hasDataErrorMessage = () => {
 };
 
 // функции и сообщение об ошибке отправки данных
-const closePostErrorMessage = () => {
-  postErrorMessage.remove();
-};
-
 const onEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
@@ -44,9 +40,15 @@ const hasPostErrorMessage = () => {
     const postErrorButton = postErrorMessage.querySelector('.error__button');
 
     postErrorButton.addEventListener('click', onMessageButtonClick);
-    document.addEventListener('keydown', onEscKeydown, {once: true});
-    document.addEventListener('click', (evt) => onOutsideContainerClick(evt, postErrorContainer), {once: true});
+    document.addEventListener('keydown', onEscKeydown);
+    document.addEventListener('click', (evt) => onOutsideContainerClick(evt, postErrorContainer));
   }
 };
+
+// декларативное объявление функции для поднятия
+function closePostErrorMessage () {
+  postErrorMessage.remove();
+  document.removeEventListener('keydown', onEscKeydown);
+}
 
 export {hasDataErrorMessage, hasPostErrorMessage, postErrorMessage};

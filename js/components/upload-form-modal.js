@@ -1,13 +1,11 @@
+import { SUCCESS_ALERT, ERROR_ALERT } from '../data.js';
 import { isEscapeKey } from '../utils.js';
-import { ERROR_MESSAGE } from '../data.js';
-import { hasError, isValidHashtag } from './validate-hashtag.js';
-import { isValidComment } from './validate-comment.js';
 import { onSmallerButtonClick, onBiggerButtonClick, resetScale } from './scale-changer.js';
 import { onEffectPreview, resetImgEffect } from './effect-changer.js';
 import { sendData } from '../api.js';
-import { hasPostErrorMessage } from './alert-messages/error-message.js';
-import { hasSuccessMessage } from './alert-messages/success-message.js';
+import { hasAlertMessage, getTypeOfMessage } from './alert-messages/alert-message.js';
 import { blockSubmitButton, unblockSubmitButton } from './submit-button.js';
+import { resetPristine, isValid } from './validation/pristine-validator.js';
 
 const imgUploadForm = document.querySelector('.img-upload__form');
 
@@ -24,12 +22,13 @@ const scaleBiggerButton = imgUploadForm.querySelector('.scale__control--bigger')
 const effectsField = imgUploadForm.querySelector('.img-upload__effects');
 
 const onEscKeydown = (evt) => {
-  const postErrorMessage = document.querySelector('.error');
+  const message = getTypeOfMessage();
+
   if(isEscapeKey(evt)) {
     evt.preventDefault();
     if (document.activeElement === hashtagInput || document.activeElement === commentInput) {
       evt.stopPropagation();
-    } else if (!postErrorMessage) {
+    } else if (!message) {
       closeUploadModal();
     }
   }
@@ -71,37 +70,22 @@ scaleBiggerButton.addEventListener('click', onBiggerButtonClick);
 // изменение эффекта изображения
 effectsField.addEventListener('change', onEffectPreview);
 
-// подключение валидации полей хештега и комментария
-const pristine = new Pristine(imgUploadForm, {
-  classTo: 'img-upload__field-wrapper',
-  errorClass: 'img-upload__field-wrapper--error',
-  errorTextParent: 'img-upload__field-wrapper',
-}, false);
-
-pristine.addValidator(hashtagInput, isValidHashtag, hasError);
-pristine.addValidator(commentInput, isValidComment, ERROR_MESSAGE);
-
-// удаление валидатора, hoisting
-function resetPristine () {
-  pristine.reset();
-}
-
 // отправка формы
 const setUserFormSubmit = (onSuccess) => {
   imgUploadForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
-    if (pristine.validate()) {
+    if (isValid()) {
       blockSubmitButton();
       hashtagInput.value = hashtagInput.value.replaceAll(/\s+/g, ' ');
 
       sendData(new FormData(evt.target))
         .then(onSuccess)
         .then(() => {
-          hasSuccessMessage();
+          hasAlertMessage(SUCCESS_ALERT);
         })
         .catch(() => {
-          hasPostErrorMessage();
+          hasAlertMessage(ERROR_ALERT);
         })
         .finally(unblockSubmitButton);
     }

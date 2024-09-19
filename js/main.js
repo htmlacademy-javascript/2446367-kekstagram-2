@@ -1,12 +1,12 @@
 import './components/upload-photo.js';
+import { RENDER_DELAY } from './data.js';
 import { openBigPictureModal } from './components/big-picture-modal.js';
 import { openUploadModal, setUserFormSubmit, closeUploadModal } from './components/upload-form-modal.js';
 import { getData } from './api.js';
 import { renderPictureThumbnails } from './components/thumbnails.js';
 import { showImgFilter, changeFilter } from './components/filter.js';
 import { debounce } from './utils.js';
-import { RENDER_DELAY } from './data.js';
-import { hasDataErrorMessage } from './components/alert-messages/error-message.js';
+import { hasDataErrorMessage } from './components/alert-messages/banner-message.js';
 
 // загрузка и отрисовка превью-изображений пользователей на странице
 

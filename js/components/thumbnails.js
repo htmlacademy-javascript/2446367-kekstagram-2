@@ -4,7 +4,7 @@ const picturesContainer = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content
   .querySelector('.picture');
 
-const hasActiveFilter = (data) => {
+const getActiveFilter = (data) => {
   const imgFiltersContainer = document.querySelector('.img-filters');
   const activeFilterElement = imgFiltersContainer.querySelector('.img-filters__button--active');
 
@@ -23,7 +23,7 @@ const resetPicturesContainer = () => {
 };
 
 const renderPictureThumbnails = (pictureThumbnails) => {
-  pictureThumbnails = hasActiveFilter(pictureThumbnails.slice());
+  pictureThumbnails = getActiveFilter(pictureThumbnails.slice());
   resetPicturesContainer();
 
   const thumbnailsListFragment = document.createDocumentFragment();

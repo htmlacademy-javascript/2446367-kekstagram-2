@@ -1,4 +1,4 @@
-import { MAX_HASHTAGS_COUNT, MAX_HASHTAGS_SYMBOLS } from '../data.js';
+import { MAX_HASHTAGS_COUNT, MAX_HASHTAGS_SYMBOLS } from '../../data.js';
 
 // переменная для сообщения об ошибке валидации
 let errorMessage = '';

@@ -56,7 +56,6 @@ const clearComments = () => {
 
   commentLoader.classList.remove('hidden');
   commentCount.classList.remove('hidden');
-  commentLoader.removeEventListener('click', renderPartComments);
 };
 
 // отрисовка остальных комментариев по клику на кнопку

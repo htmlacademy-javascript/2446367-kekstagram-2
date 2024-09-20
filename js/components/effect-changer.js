@@ -1,4 +1,4 @@
-import { EffectPreset, StylePreset } from '../data.js';
+import { EffectSliderPreset, EffectStylePreset } from '../data.js';
 
 const effectLevelInput = document.querySelector('.effect-level__value');
 const effectLevelSlider = document.querySelector('.effect-level__slider');
@@ -55,13 +55,13 @@ const updateImgEffect = (effect) => {
 
 effectLevelSlider.noUiSlider.on('update', () => {
   const range = effectLevelSlider.noUiSlider.get();
-  image.style.filter = `${StylePreset[currentEffect].style}(${range}${StylePreset[currentEffect].unit})`;
+  image.style.filter = `${EffectStylePreset[currentEffect].style}(${range}${EffectStylePreset[currentEffect].unit})`;
   effectLevelInput.value = range;
 });
 
 const updateEffectSlider = (effect) => {
   currentEffect = effect;
-  effectLevelSlider.noUiSlider.updateOptions(EffectPreset[effect]);
+  effectLevelSlider.noUiSlider.updateOptions(EffectSliderPreset[effect]);
 };
 
 const onEffectPreview = (evt) => {

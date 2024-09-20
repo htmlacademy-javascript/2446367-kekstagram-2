@@ -33,13 +33,15 @@ const openBigPictureModal = (pictureId, data) => {
   renderBigPicture(currentElement);
   renderCommentsList(currentElement.comments);
 
-  bigPictureCloseButton.addEventListener('click', onCancelButtonClick, {once: true});
-  document.addEventListener('keydown', onEscKeydown, {once: true});
+  bigPictureCloseButton.addEventListener('click', onCancelButtonClick);
+  document.addEventListener('keydown', onEscKeydown);
 };
 
 // декларативное объявление функции для поднятия
 function closeBigPictureModal () {
   clearComments();
+
+  document.removeEventListener('keydown', onEscKeydown);
 
   bigPictureModal.classList.add('hidden');
   document.body.classList.remove('modal-open');

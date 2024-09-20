@@ -15,6 +15,10 @@ const ErrorText = {
 // определение расширений для загружаемых файлов
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
+// определение данных сообщения ошибки/успеха загрузки данных
+const SUCCESS_ALERT = 'success';
+const ERROR_ALERT = 'error';
+
 // определение данных для валидации хэштега
 const MAX_HASHTAGS_COUNT = 5;
 const MAX_HASHTAGS_SYMBOLS = 20;
@@ -84,7 +88,7 @@ const HEAT_PRESET = {
   step: 0.1,
 };
 
-const EffectPreset = {
+const EffectSliderPreset = {
   none: MARVIN_PRESET,
   chrome: CHROME_PRESET,
   sepia: SEPIA_PRESET,
@@ -93,7 +97,7 @@ const EffectPreset = {
   heat: HEAT_PRESET,
 };
 
-const StylePreset = {
+const EffectStylePreset = {
   none: {
     style: 'none',
     unit: '',
@@ -133,7 +137,9 @@ export {
   COUNT_STEP,
   ERROR_SHOW_TIME,
   RENDER_DELAY,
+  SUCCESS_ALERT,
+  ERROR_ALERT,
   Method,
   ErrorText,
-  EffectPreset,
-  StylePreset };
+  EffectSliderPreset,
+  EffectStylePreset };

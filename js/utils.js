@@ -13,18 +13,18 @@ const debounce = (callback, timeoutDelay = 500) => {
 };
 
 // тасование Фишера-Йетса
-const shuffle = (array) => {
-  let m = array.length, t, i;
+const shuffle = (data) => {
+  let m = data.length, t, i;
 
   while (m) {
     i = Math.floor(Math.random() * m--);
 
-    t = array[m];
-    array[m] = array[i];
-    array[i] = t;
+    t = data[m];
+    data[m] = data[i];
+    data[i] = t;
   }
 
-  return array;
+  return data;
 };
 
 export { isEscapeKey, debounce, shuffle };

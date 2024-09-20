@@ -15,35 +15,35 @@ const isValidHashtag = (value) => {
     return true;
   }
 
-  const inputArray = inputValue.split(/\s+/);
+  const inputValues = inputValue.split(/\s+/);
 
   const rules = [
     {
-      check: inputArray.some((item) => item === '#'),
+      check: inputValues.some((item) => item === '#'),
       error: 'Хэштег не может состоять только из одной решётки',
     },
     {
-      check: inputArray.some((item) => item.slice(1).includes('#')),
+      check: inputValues.some((item) => item.slice(1).includes('#')),
       error: 'Хэштеги разделяются пробелами',
     },
     {
-      check: inputArray.some((item) => item[0] !== '#'),
+      check: inputValues.some((item) => item[0] !== '#'),
       error: 'Хэштег начинается с символа # (решётка)',
     },
     {
-      check: inputArray.some((item, index, array) => array.includes(item, index + 1)),
+      check: inputValues.some((item, index, array) => array.includes(item, index + 1)),
       error: 'Один и тот же хэштег не может быть использован дважды',
     },
     {
-      check: inputArray.some((item) => item.length > MAX_HASHTAGS_SYMBOLS),
+      check: inputValues.some((item) => item.length > MAX_HASHTAGS_SYMBOLS),
       error: `Максимальная длина одного хештега ${MAX_HASHTAGS_SYMBOLS}, включая решётку`,
     },
     {
-      check: inputArray.length > MAX_HASHTAGS_COUNT,
+      check: inputValues.length > MAX_HASHTAGS_COUNT,
       error: `Нельзя указать больше ${MAX_HASHTAGS_COUNT} хэштегов`,
     },
     {
-      check: inputArray.some((item) => !validateRegExp.test(item)),
+      check: inputValues.some((item) => !validateRegExp.test(item)),
       error: 'Хэштег содержит недопустимые символы',
     },
   ];
